@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - FlySwift</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/heroicons@1.0.5/dist/heroicons.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <div class="flex">
+    <!-- Sidebar -->
+    <div class="w-64 bg-blue-600 text-white min-h-screen p-4">
+      <h2 class="text-2xl font-bold mb-8">Admin Dashboard</h2>
+      <ul class="space-y-4">
+
+        <li>
+          <a href="/admin_airports" class="flex items-center space-x-2 hover:bg-blue-500 p-2 rounded-md">
+            <svg class="w-6 h-6"><use xlink:href="#heroicon-o-office-building"/></svg>
+            <span>Manage Airports</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin_airplanes" class="flex items-center space-x-2 hover:bg-blue-500 p-2 rounded-md">
+            <svg class="w-6 h-6"><use xlink:href="#heroicon-o-paper-airplane"/></svg>
+            <span>Manage Airplanes</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin_scheduled_flights" class="flex items-center space-x-2 hover:bg-blue-500 p-2 rounded-md">
+            <svg class="w-6 h-6"><use xlink:href="#heroicon-o-calendar"/></svg>
+            <span>Manage  Flights</span>
+          </a>
+        </li>
+      <!-- <li>
+            <a href="/admin_reservations" class="flex items-center space-x-2 hover:bg-blue-500 p-2 rounded-md">
+              <svg class="w-6 h-6"><use xlink:href="#heroicon-o-document-report"/></svg>
+              <span>See Reservations</span>
+            </a>
+          </li>-->   
+        <li>
+          <a href="/admin_logout" class="flex items-center space-x-2 hover:bg-blue-500 p-2 rounded-md">
+            <svg class="w-6 h-6"><use xlink:href="#heroicon-o-logout"/></svg>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-6">
+      <h1 class="text-3xl font-bold mb-6">Welcome, Admin</h1>
+      <p>Use the sidebar to navigate through the admin options.</p>
+    </div>
+  </div>
+
+  <!-- Heroicons SVG -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="heroicon-o-document-report" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2m-10 0h6m2 0a2 2 0 012-2h1a2 2 0 012 2v2"/>
+    </symbol>
+    <symbol id="heroicon-o-office-building" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19.5A2.5 2.5 0 016.5 22h11a2.5 2.5 0 002.5-2.5V6.5A2.5 2.5 0 0017.5 4h-11A2.5 2.5 0 004 6.5v13zM16 14h1M16 18h1M12 14h1M12 18h1M8 14h1M8 18h1"/>
+    </symbol>
+    <symbol id="heroicon-o-paper-airplane" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v4.8a1.2 1.2 0 001.6 1.2l3.4-.68 4.46 2.5a1.2 1.2 0 001.72-.68l3.3-8.28a1.2 1.2 0 00-1.45-1.6l-8.29 3.31a1.2 1.2 0 00-.67 1.73l2.5 4.46-.67 3.4a1.2 1.2 0 001.2 1.6H20"/>
+    </symbol>
+    <symbol id="heroicon-o-calendar" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h.01M12 7h.01M16 7h.01M12 11h.01M8 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M4 7h16M4 21h16a2 2 0 002-2V7a2 2 0 00-2-2h-4M8 3v4M16 3v4M4 11h16M4 15h16M4 19h16M8 7v.01M12 7v.01M16 7v.01M12 11v.01M8 11v.01M16 11v.01M8 15v.01M12 15v.01M16 15v.01M4 3h4M4 7h4M16 3h4M16 7h4"/>
+    </symbol>
+    <symbol id="heroicon-o-logout" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6-4v1m0 4v1m0-5v6m7 4H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v4"/>
+    </symbol>
+  </svg>
+
+</body>
+</html>

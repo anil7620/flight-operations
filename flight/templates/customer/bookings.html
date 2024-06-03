@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Dashboard - FlySwift</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://unpkg.com/heroicons@1.0.5/dist/heroicons.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <div class="flex">
+    <!-- Sidebar -->
+    <div class="w-64 bg-blue-600 text-white min-h-screen p-4">
+      <h2 class="text-2xl font-bold mb-8">Customer Dashboard</h2>
+      <ul class="space-y-4">
+        <li>
+          <a href="/customer_bookings" class="flex items-center space-x-2 hover:bg-blue-500 p-2 rounded-md">
+            <svg class="w-6 h-6"><use xlink:href="#heroicon-o-document-text"/></svg>
+            <span>Manage Bookings</span>
+          </a>
+        </li>
+        <li>
+          <a href="/customer_logout" class="flex items-center space-x-2 hover:bg-blue-500 p-2 rounded-md">
+            <svg class="w-6 h-6"><use xlink:href="#heroicon-o-logout"/></svg>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-6">
+      <h1 class="text-3xl font-bold mb-6">Welcome to FlySwift</h1> 
+
+      <!-- Manage Reservations Section -->
+      <section class="mt-8 p-4 bg-white shadow-md rounded">
+        <h2 class="text-2xl font-semibold mb-4">Manage Reservations</h2>
+        <div id="reservations-container" class="space-y-4">
+          <table class="min-w-full bg-white">
+            <thead>
+              <tr>
+                <th class="py-2">Reservation ID</th>
+                <th class="py-2">From</th>
+                <th class="py-2">To</th>
+                <th class="py-2">Seat Type</th>
+                <th class="py-2">Number of Passengers</th>
+               <!-- <th class="py-2">Passengers</th> --> 
+                <th class="py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="reservations-table-body">
+              {% for reservation in bookings %}
+                <tr>
+                  <td class="py-2">{{ reservation._id }}</td>
+                  <td class="py-2">{{ reservation.flight.origin_airport_name }}</td>
+                  <td class="py-2">{{ reservation.flight.destination_airport_name }}</td>
+                  <td class="py-2">{{ reservation.seat_type }}</td>
+                  <td class="py-2">{{ reservation.num_passengers }}</td>
+                  <td class="py-2">
+                  <!-- <ul>
+                      {% for passenger in reservation.passengers %}
+                        <li>{{ passenger.name }} (Age: {{ passenger.age }})</li>
+                      {% endfor %}--> 
+                    </ul>
+                  </td>
+                  <td class="py-2">
+                    <a href="/cancel_reservation/{{ reservation._id }}" class="text-red-600 hover:text-red-800">Cancel</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Heroicons SVG -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="heroicon-o-document-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8V4m0 0a2 2 0 00-2 2v4m2-6a2 2 0 012 2v4m0 0v8m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2h-8a2 2 0 00-2 2v6a2 2 0 002 2zm-6-4a2 2 0 012-2h12m-6 4v4"/>
+    </symbol>
+    <symbol id="heroicon-o-logout" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6-4v1m0 4v1m0-5v6m7 4H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0

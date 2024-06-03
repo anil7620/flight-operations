@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlySwift</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl font-bold">FlySwift</h1>
+        <p>Your go-to flight operations system</p>
+      </div>
+      <div class="flex space-x-4">
+        <a href="/admin_login" class="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-gray-200">Admin Login</a>
+        {% if is_logged_in %}
+          <a href="/customer_logout" class="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-gray-200">Logout</a>
+        {% else %}
+          <a href="/customer_login" class="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-gray-200">User Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <!-- Flight Information Section -->
+  <section class="container mx-auto mt-8 p-4 bg-white shadow-md rounded">
+    <h2 class="text-2xl font-semibold mb-4">Flight Information</h2>
+     
+    <div class="bg-gray-50 p-6 rounded-md shadow-md mb-4">
+      <h3 class="text-xl font-bold mb-2">Flight Number: {{ flight._id }}</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <p><strong>Departure:</strong> {{ flight.departure_name }}</p>
+          <p><strong>Arrival:</strong> {{ flight.arrival_name }}</p>
+          <p><strong>Date:</strong> {{ flight.start_datetime.strftime('%Y-%m-%d') }}</p>
+          <p><strong>Start Time:</strong> {{ flight.start_datetime.strftime('%H:%M') }}</p>
+          <p><strong>End Time:</strong> {{ flight.end_datetime.strftime('%H:%M') }}</p>
+        </div>
+        <div class="space-y-2">
+          <p><strong>First Class Cost:</strong> ${{ flight.seats_cost.first_class }}</p>
+          <p><strong>Business Class Cost:</strong> ${{ flight.seats_cost.business_class }}</p>
+          <p><strong>Economy Class Cost:</strong> ${{ flight.seats_cost.economy_class }}</p>
+        </div>
+      </div>
+      <div class="mt-6 space-y-2">
+        {% if is_logged_in %}
+          <a href="/book/{{ flight._id }}/first_class" class="block text-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Book First Class</a>
+          <a href="/book/{{ flight._id }}/business_class" class="block text-center bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Book Business Class</a>
+          <a href="/book/{{ flight._id }}/economy_class" class="block text-center bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700">Book Economy Class</a>
+        {% else %}
+          <a href="/customer_login?next={{ url_for('book_flight', flight_id=flight._id) }}" class="block text-center bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">Login to Book</a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    $(document).ready(function() {
+      $.getJSON('/api/airports', function(data) {
+        let departureInput = $('#departure');
+        let arrivalInput = $('#arrival');
+        
+        let airportNames = data.map(airport => airport.airport_name);
+        
+        departureInput.autocomplete({
+          source: airportNames
+        });
+        
+        arrivalInput.autocomplete({
+          source: airportNames
+        });
+      });
+    });
+  </script>
+</body>
+</html>
