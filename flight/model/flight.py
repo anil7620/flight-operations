@@ -1,6 +1,7 @@
 from flight import mongo
 from werkzeug.security import generate_password_hash, check_password_hash
 from bson.objectid import ObjectId
+from datetime import timedelta
 class Flight:
     collection = mongo.db.flights
 
@@ -54,3 +55,29 @@ class Flight:
     @classmethod
     def find(cls, query):
         return list(cls.collection.find(query))
+    
+    @classmethod
+    def check_conflict(cls, airplane_id, start_datetime, end_datetime):
+        buffer_period = timedelta(hours=2)
+        buffer_start = start_datetime - buffer_period
+        buffer_end = end_datetime + buffer_period
+
+        conflict_count = cls.collection.count_documents({
+            "airplane_id": ObjectId(airplane_id),
+            "$or": [
+                {
+                    "start_datetime": {"$lt": buffer_end, "$gt": buffer_start}
+                },
+                {
+                    "end_datetime": {"$lt": buffer_end, "$gt": buffer_start}
+                },
+                {
+                    "$and": [
+                        {"start_datetime": {"$lt": buffer_start}},
+                        {"end_datetime": {"$gt": buffer_end}}
+                    ]
+                }
+            ]
+        })
+
+        return conflict_count > 0

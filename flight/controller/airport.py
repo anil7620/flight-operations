@@ -18,20 +18,22 @@ logger = logging.getLogger(__name__)
 def admin_airports():
     if session["user_type"] != "admin":
         flash("Unauthorized access.", "error")
-        return redirect(url_for('admin_login'))
+        return redirect(url_for('login'))
     
     if request.method == 'POST':
         airport_name = request.form.get("airport_name").strip()
-        # city = request.form.get("city").strip()
+        city = request.form.get("city").strip()
         state = request.form.get("state").strip()
-        # code = request.form.get("code").strip()
-        # timezone = request.form.get("timezone").strip()
+        zipcode = request.form.get("zipcode").strip()
+        phone = request.form.get("phone").strip()
+        email = request.form.get("email").strip()
         data = {
             "airport_name": airport_name,
-            # "city": city,
+            "city": city,
             "state": state,
-            # "code": code,
-            # "timezone": timezone
+            "zipcode": zipcode,
+            "phone": phone,
+            "email": email
         }
         Airport.create(data)
         flash("Airport added successfully!", "success")
@@ -46,21 +48,28 @@ def admin_airports():
 def admin_airport_edit(airport_id):
     if session["user_type"] != "admin":
         flash("Unauthorized access.", "error")
+        return redirect(url_for('login'))
 
     if request.method == 'POST':
         airport_name = request.form.get("airport_name").strip()
+        city = request.form.get("city").strip()
         state = request.form.get("state").strip()
+        zipcode = request.form.get("zipcode").strip()
+        phone = request.form.get("phone").strip()
+        email = request.form.get("email").strip()
         data = {
             "airport_name": airport_name,
+            "city": city,
             "state": state,
+            "zipcode": zipcode,
+            "phone": phone,
+            "email": email
         }
         Airport.update(ObjectId(airport_id), data)
         flash("Airport updated successfully!", "success")
         return redirect(url_for('admin_airports'))
     
     airport = Airport.get_by_id(ObjectId(airport_id))
-    print(airport)
-
     return render_template('admin/admin_edit_airport.html', airport=airport)
 
 
@@ -68,7 +77,7 @@ def admin_airport_edit(airport_id):
 def admin_airport_delete(airport_id):
     if session["user_type"] != "admin":
         flash("Unauthorized access.", "error")
-        return redirect(url_for('admin_login'))
+        return redirect(url_for('login'))
     
     Airport.delete(ObjectId(airport_id))
     flash("Airport deleted successfully!", "success")

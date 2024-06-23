@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Customer Dashboard - FlySwift</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://unpkg.com/heroicons@1.0.5/dist/heroicons.js"></script>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -24,7 +22,7 @@
           </a>
         </li>
         <li>
-          <a href="/customer_logout" class="flex items-center space-x-2 hover:bg-blue-500 p-2 rounded-md">
+          <a href="/logout" class="flex items-center space-x-2 hover:bg-blue-500 p-2 rounded-md">
             <svg class="w-6 h-6"><use xlink:href="#heroicon-o-logout"/></svg>
             <span>Logout</span>
           </a>
@@ -43,11 +41,15 @@
         <form action="/search" method="GET" class="space-y-4">
           <div>
             <label for="departure" class="block text-sm font-medium text-gray-700">Departure</label>
-            <input type="text" id="departure" name="departure" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <select id="departure" name="departure" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+              <option value="">Select departure airport</option>
+            </select>
           </div>
           <div>
             <label for="arrival" class="block text-sm font-medium text-gray-700">Arrival</label>
-            <input type="text" id="arrival" name="arrival" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <select id="arrival" name="arrival" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+              <option value="">Select arrival airport</option>
+            </select>
           </div>
           <div>
             <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
@@ -72,17 +74,12 @@
   <script>
     $(document).ready(function() {
       $.getJSON('/api/airports', function(data) {
-        let departureInput = $('#departure');
-        let arrivalInput = $('#arrival');
+        let departureSelect = $('#departure');
+        let arrivalSelect = $('#arrival');
         
-        let airportNames = data.map(airport => airport.airport_name);
-        
-        departureInput.autocomplete({
-          source: airportNames
-        });
-        
-        arrivalInput.autocomplete({
-          source: airportNames
+        data.forEach(function(airport) {
+          departureSelect.append(new Option(airport.airport_name, airport.airport_name));
+          arrivalSelect.append(new Option(airport.airport_name, airport.airport_name));
         });
       });
     });

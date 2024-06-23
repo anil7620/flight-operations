@@ -24,6 +24,8 @@ def search_flights():
     departure = request.args.get('departure')
     arrival = request.args.get('arrival')
     date = request.args.get('date')
+    print("===========================")
+    print(f"Departure: {departure}, Arrival: {arrival}, Date: {date}")
 
     # Fetch airport IDs based on names
     departure_airport = Airport.find_one({'airport_name': departure})
@@ -55,15 +57,21 @@ def search_flights():
         return redirect(url_for('home'))
 
 
+# @flight.route('/api/airports', methods=['GET'])
+# def get_airports():
+#     airports = Airport.get_all()
+#     return jsonify([{
+#         '_id': str(airport['_id']),
+#         'airport_name': airport['airport_name'],
+#         'state': airport['state']
+#     } for airport in airports])
+ 
+
 @flight.route('/api/airports', methods=['GET'])
 def get_airports():
     airports = Airport.get_all()
-    return jsonify([{
-        '_id': str(airport['_id']),
-        'airport_name': airport['airport_name'],
-        'state': airport['state']
-    } for airport in airports])
- 
+    airport_list = [{"airport_name": airport["airport_name"], "id": str(airport["_id"])} for airport in airports]
+    return jsonify(airport_list)
 
 
 
@@ -72,7 +80,7 @@ def get_airports():
 @flight.route('/book/<flight_id>', methods=['GET'])
 def book_flight(flight_id):
     if 'user_id' not in session:
-        return redirect(url_for('customer_login', next=url_for('book_flight', flight_id=flight_id)))
+        return redirect(url_for('login', next=url_for('book_flight', flight_id=flight_id)))
     
     flight = Flight.get_by_id(ObjectId(flight_id))
     if flight:
@@ -84,20 +92,3 @@ def book_flight(flight_id):
         return redirect(url_for('home'))
 
 
-# @flight.route('/book/<flight_id>/<seat_type>', methods=['GET', 'POST'])
-# def book_seat(flight_id, seat_type):
-#     if 'user_id' not in session:
-#         return redirect(url_for('customer_login', next=url_for('book_seat', flight_id=flight_id, seat_type=seat_type)))
-
-#     flight = Flight.get_by_id(ObjectId(flight_id))
-#     if not flight:
-#         flash("Flight not found.")
-#         return redirect(url_for('home'))
-
-#     if request.method == 'POST':
-#         # Process the booking here (save to database, etc.)
-#         flash(f"Successfully booked {seat_type.replace('_', ' ')} seat on flight {flight_id}")
-#         return redirect(url_for('customer_dashboard'))
-
-#     seat_cost = flight['seats_cost'].get(seat_type, 0)
-#     return render_template('customer/confirm_booking.html', flight=flight, seat_type=seat_type, seat_cost=seat_cost)

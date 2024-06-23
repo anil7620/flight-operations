@@ -15,11 +15,12 @@ logger = logging.getLogger(__name__)
 def admin_airplanes():
     if session["user_type"] != "admin":
         flash("Unauthorized access.", "error")
-        return redirect(url_for('admin_login'))
+        return redirect(url_for('login'))
     
     if request.method == 'POST': 
-        flight_name = request.form.get("flight_name").strip()
+        flight_name = ""
         airline = request.form.get("airline").strip()
+        airline_name = request.form.get("airline_name").strip()
         seat_type_available = {
             "first_class": int(request.form.get("first_class").strip()),
             "business_class": int(request.form.get("business_class").strip()),
@@ -29,6 +30,7 @@ def admin_airplanes():
         data = { 
             "flight_name": flight_name,
             "airline": airline,
+            "airline_name": airline_name,
             "seat_type_available": seat_type_available
         }
         Airplane.create(data)
@@ -43,11 +45,12 @@ def admin_airplanes():
 def admin_airplane_edit(airplane_id):
     if session["user_type"] != "admin":
         flash("Unauthorized access.", "error")
-        return redirect(url_for('admin_login'))
+        return redirect(url_for('login'))
     
     if request.method == 'POST':
         flight_name = request.form.get("flight_name").strip()
         airline = request.form.get("airline").strip()
+        airline_name = request.form.get("airline_name").strip()
         seat_type_available = {
             "first_class": int(request.form.get("first_class").strip()),
             "business_class": int(request.form.get("business_class").strip()),
@@ -57,6 +60,7 @@ def admin_airplane_edit(airplane_id):
         data = {
             "flight_name": flight_name,
             "airline": airline,
+            "airline_name": airline_name,
             "seat_type_available": seat_type_available
         }
         Airplane.update(ObjectId(airplane_id), data)
@@ -67,11 +71,12 @@ def admin_airplane_edit(airplane_id):
     return render_template('airplanes/admin_edit_airplane.html', airplane=airplane)
 
 
+
 @flight.route('/admin_airplanes/delete/<airplane_id>', methods=['GET'])
 def admin_airplane_delete(airplane_id):
     if session["user_type"] != "admin":
         flash("Unauthorized access.", "error")
-        return redirect(url_for('admin_login'))
+        return redirect(url_for('login'))
     
     Airplane.delete(ObjectId(airplane_id))
     flash("Airplane deleted successfully!", "success")

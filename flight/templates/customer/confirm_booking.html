@@ -16,7 +16,7 @@
       <div class="flex space-x-4">
         <a href="/" class="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-gray-200">Home</a>
         <a href="/customer_dashboard" class="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-gray-200">Dashboard</a>
-        <a href="/customer_logout" class="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-gray-200">Logout</a>
+        <a href="/logout" class="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-gray-200">Logout</a>
       </div>
     </div>
   </header>
@@ -51,8 +51,8 @@
             <input type="text" id="passenger_1_name" name="passenger_1_name" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
           </div>
           <div>
-            <label for="passenger_1_age" class="block text-sm font-medium text-gray-700">Passenger 1 Age:</label>
-            <input type="number" id="passenger_1_age" name="passenger_1_age" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+            <label for="passenger_1_dob" class="block text-sm font-medium text-gray-700">Passenger 1 Date of Birth:</label>
+            <input type="date" id="passenger_1_dob" name="passenger_1_dob" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
           </div>
         </div>
       </div>
@@ -80,11 +80,38 @@
       </div>
 
       <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Confirm Booking</button>
+      <p class="mt-4 text-xl font-bold">Total Cost: $<span id="total-cost">{{ seat_cost }}</span></p>
     </form>
   </section>
 
   <script>
     $(document).ready(function() {
+      const seatCost = parseFloat("{{ seat_cost }}");
+
+      function calculateTotalCost() {
+        let totalCost = 0;
+        let numPassengers = parseInt($('#num_passengers').val());
+        for (let i = 1; i <= numPassengers; i++) {
+          let dob = $(`#passenger_${i}_dob`).val();
+          if (dob) {
+            let birthDate = new Date(dob);
+            let age = new Date().getFullYear() - birthDate.getFullYear();
+            if (new Date().getMonth() < birthDate.getMonth() || 
+                (new Date().getMonth() === birthDate.getMonth() && new Date().getDate() < birthDate.getDate())) {
+              age--;
+            }
+            if (age < 17) {
+              totalCost += seatCost * 0.5;
+            } else {
+              totalCost += seatCost;
+            }
+          } else {
+            totalCost += seatCost;
+          }
+        }
+        $('#total-cost').text(totalCost.toFixed(2));
+      }
+
       $('#num_passengers').on('change', function() {
         let numPassengers = $(this).val();
         let container = $('#passenger-info-container');
@@ -101,13 +128,19 @@
                 <input type="text" id="passenger_${i}_name" name="passenger_${i}_name" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
               </div>
               <div>
-                <label for="passenger_${i}_age" class="block text-sm font-medium text-gray-700">Passenger ${i} Age:</label>
-                <input type="number" id="passenger_${i}_age" name="passenger_${i}_age" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                <label for="passenger_${i}_dob" class="block text-sm font-medium text-gray-700">Passenger ${i} Date of Birth:</label>
+                <input type="date" id="passenger_${i}_dob" name="passenger_${i}_dob" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
               </div>
             </div>
           `;
           container.append(passengerInfo);
         }
+
+        calculateTotalCost();
+      });
+
+      $(document).on('change', 'input[type="date"]', function() {
+        calculateTotalCost();
       });
 
       // Trigger change event to initialize the passenger info fields

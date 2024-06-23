@@ -14,8 +14,12 @@
       <h1 class="text-2xl font-bold mb-6">Customer Registration</h1>
       <form action="/customer_signup" method="POST" class="space-y-4">
         <div>
-          <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-          <input type="text" id="username" name="username" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+          <label for="firstname" class="block text-sm font-medium text-gray-700">First Name</label>
+          <input type="text" id="firstname" name="firstname" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+        <div>
+          <label for="lastname" class="block text-sm font-medium text-gray-700">Last Name</label>
+          <input type="text" id="lastname" name="lastname" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
         </div>
         <div>
           <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
@@ -26,22 +30,29 @@
           <input type="password" id="password" name="password" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
         </div>
         <div>
+          <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+          <input type="password" id="confirm_password" name="confirm_password" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+        <div>
           <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
           <input type="date" id="dob" name="dob" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
         </div>
         <div>
-          <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
-          <select id="gender" name="gender" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-            <option value="" disabled selected>Select your gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
+          <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+          <input type="text" id="city" name="city" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+        <div>
+          <label for="state" class="block text-sm font-medium text-gray-700">State</label>
+          <input type="text" id="state" name="state" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+        <div>
+          <label for="zipcode" class="block text-sm font-medium text-gray-700">Zip Code</label>
+          <input type="text" id="zipcode" name="zipcode" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
         </div>
         <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Register</button>
       </form>
       <div class="mt-4">
-        <a href="/customer_login" class="text-blue-600 hover:underline">Already have an account? Login</a>
+        <a href="/login" class="text-blue-600 hover:underline">Already have an account? Login</a>
       </div>
     </div>
   </div>

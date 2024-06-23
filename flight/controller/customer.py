@@ -17,30 +17,42 @@ def customer_signup():
     if request.method == 'POST':
         try:
             # Data from form
-            username = request.form.get("username").strip()
+            firstname = request.form.get("firstname").strip()
+            lastname = request.form.get("lastname").strip()
             email = request.form.get("email").strip()
             password = request.form.get("password").strip()
+            confirm_password = request.form.get("confirm_password").strip()
             dob = request.form.get("dob").strip()
-            gender = request.form.get("gender").strip()
+            city = request.form.get("city").strip()
+            state = request.form.get("state").strip()
+            zipcode = request.form.get("zipcode").strip()
+
+            # Check if passwords match
+            if password != confirm_password:
+                flash("Passwords do not match.", "error")
+                return redirect(url_for('customer_signup'))
 
             # Check if the customer email is already registered
             if Customer.exists_by_email(email):
-                flash({"message": "Customer already registered."}), 200
-                return redirect(url_for('customer_login'))
+                flash("Customer already registered.", "error")
+                return redirect(url_for('login'))
 
             # Data preparation
             data = {
-                "username": username,
+                "firstname": firstname,
+                "lastname": lastname,
                 "email": email,
                 "password": password,
                 "dob": dob,
-                "gender": gender
+                "city": city,
+                "state": state,
+                "zipcode": zipcode
             }
 
             # Create customer record
             Customer.create(data)
-            flash({"message": "Customer registered successfully!"}), 201
-            return redirect(url_for('customer_login'))
+            flash("Customer registered successfully!", "success")
+            return redirect(url_for('login'))
 
         except Exception as e:
             logger.error(f"Error during customer registration: {str(e)}")
@@ -49,8 +61,9 @@ def customer_signup():
     return render_template('customer/signup.html')
 
 
-# @flight.route('/customer_login', methods=['GET', 'POST'])
-# def customer_login():
+
+# @flight.route('/login', methods=['GET', 'POST'])
+# def login():
 #     if request.method == 'POST':
 #         email = request.form.get("email").strip()
 #         password = request.form.get("password").strip()
@@ -65,58 +78,58 @@ def customer_signup():
 #                 return redirect(next_url or url_for('customer_dashboard'))
 #             else:
 #                 flash("Invalid credentials", "error")
-#                 return redirect(url_for('customer_login'))
+#                 return redirect(url_for('login'))
 #         else:
 #             flash("No such customer", "error")
-#             return redirect(url_for('customer_login'))
+#             return redirect(url_for('login'))
 #     next_url = request.args.get('next')
 #     return render_template('customer/login.html', next=next_url)
 
-@flight.route('/customer_login', methods=['GET', 'POST'])
-def customer_login():
-    next_url = request.args.get('next') or request.form.get('next') or url_for('customer_dashboard')
+# @flight.route('/login', methods=['GET', 'POST'])
+# def login():
+#     next_url = request.args.get('next') or request.form.get('next') or url_for('customer_dashboard')
 
-    if request.method == 'POST':
-        email = request.form.get("email").strip()
-        password = request.form.get("password").strip()
+#     if request.method == 'POST':
+#         email = request.form.get("email").strip()
+#         password = request.form.get("password").strip()
 
-        print(f"Next URL: {next_url}")
+#         print(f"Next URL: {next_url}")
 
-        # Check if user exists in the customer database
-        if Customer.exists_by_email(email):
-            customer = Customer.get_by_email(email)
-            if customer['password'] == password:
-                session["user_id"] = str(customer['_id']) 
-                session["user_type"] = "customer"
-                return redirect(next_url)
-            else:
-                flash("Invalid credentials", "error")
-                return redirect(url_for('customer_login', next=next_url))
-        else:
-            flash("No such customer", "error")
-            return redirect(url_for('customer_login', next=next_url))
+#         # Check if user exists in the customer database
+#         if Customer.exists_by_email(email):
+#             customer = Customer.get_by_email(email)
+#             if customer['password'] == password:
+#                 session["user_id"] = str(customer['_id']) 
+#                 session["user_type"] = "customer"
+#                 return redirect(next_url)
+#             else:
+#                 flash("Invalid credentials", "error")
+#                 return redirect(url_for('login', next=next_url))
+#         else:
+#             flash("No such customer", "error")
+#             return redirect(url_for('login', next=next_url))
 
-    return render_template('customer/login.html', next=next_url)
-
-
-@flight.route('/customer_dashboard')
-def customer_dashboard():
-    if session.get("user_type") != "customer":
-        flash("Unauthorized access.", "error")
-        return redirect(url_for('customer_login')) 
-    return render_template('customer/home.html', is_logged_in=True)
+#     return render_template('customer/login.html', next=next_url)
 
 
+# @flight.route('/customer_dashboard')
+# def customer_dashboard():
+#     if session.get("user_type") != "customer":
+#         flash("Unauthorized access.", "error")
+#         return redirect(url_for('login')) 
+#     return render_template('customer/home.html', is_logged_in=True)
 
 
 
 
 
 
-@flight.route('/customer_logout')
-def customer_logout():
-    session.clear()
-    return redirect(url_for('customer_login'))
+
+
+# @flight.route('/logout')
+# def logout():
+#     session.clear()
+#     return redirect(url_for('login'))
 
 
 
@@ -124,7 +137,7 @@ def customer_logout():
 def customer_bookings():
     if session.get("user_type") != "customer":
         flash("Unauthorized access.", "error")
-        return redirect(url_for('customer_login'))
+        return redirect(url_for('login'))
     
     customer_id = session.get("user_id")
     bookings = Reservation.get_bookings(customer_id)
@@ -148,7 +161,7 @@ def customer_bookings():
 def cancel_reservation(reservation_id):
     if session.get("user_type") != "customer":
         flash("Unauthorized access.", "error")
-        return redirect(url_for('customer_login'))
+        return redirect(url_for('login'))
     
     try:
         reservation = Reservation.get_by_id(ObjectId(reservation_id))
